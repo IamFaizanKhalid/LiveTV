@@ -1,7 +1,6 @@
 package com.iamfaizankhalid.livetv;
 
 import android.os.Bundle;
-import android.widget.Toast;
 
 import androidx.leanback.app.BrowseSupportFragment;
 import androidx.leanback.widget.ArrayObjectAdapter;
@@ -18,16 +17,13 @@ public class MainFragment extends BrowseSupportFragment implements CardClickList
 	}
 
 	private void navigateToVideoPlaybackFragment(Video video) {
-		// Display a toast message to indicate the click event
-		Toast.makeText(requireContext(), "Card clicked: " + video.getTitle(), Toast.LENGTH_SHORT).show();
-
 		// Create a new instance of VideoPlaybackFragment and pass the clicked video's information
-		VideoPlaybackFragment playbackFragment = VideoPlaybackFragment.newInstance(video);
+		ExoPlayerFragment exoPlayerFragment = ExoPlayerFragment.newInstance(video.getUrl());
 
 		// Use FragmentManager to replace the current fragment with the video playback fragment
 		requireFragmentManager()
 				.beginTransaction()
-				.replace(R.id.main_browse_fragment, playbackFragment)
+				.replace(R.id.main_browse_fragment, exoPlayerFragment)
 				.addToBackStack(null)
 				.commit();
 	}

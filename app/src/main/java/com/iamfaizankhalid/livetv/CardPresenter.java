@@ -39,7 +39,6 @@ public class CardPresenter extends Presenter {
 		cardView.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				Log.d("test", "worked");
 				// Handle card click here
 				if (cardClickListener != null) {
 					Video clickedVideo = (Video) item;
