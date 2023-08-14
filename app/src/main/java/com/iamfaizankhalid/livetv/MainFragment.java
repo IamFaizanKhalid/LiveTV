@@ -1,6 +1,7 @@
 package com.iamfaizankhalid.livetv;
 
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.leanback.app.BrowseSupportFragment;
 import androidx.leanback.widget.ArrayObjectAdapter;
@@ -17,8 +18,14 @@ public class MainFragment extends BrowseSupportFragment implements CardClickList
 	}
 
 	private void navigateToVideoPlaybackFragment(Video video) {
+		String playbackUrl = video.getUrl();
+		if (playbackUrl == "") {
+			Toast.makeText(requireContext(), "Fetch to get stream", Toast.LENGTH_LONG).show();
+			return;
+		}
+
 		// Create a new instance of VideoPlaybackFragment and pass the clicked video's information
-		ExoPlayerFragment exoPlayerFragment = ExoPlayerFragment.newInstance(video.getUrl());
+		ExoPlayerFragment exoPlayerFragment = ExoPlayerFragment.newInstance(playbackUrl);
 
 		// Use FragmentManager to replace the current fragment with the video playback fragment
 		requireFragmentManager()
@@ -32,6 +39,8 @@ public class MainFragment extends BrowseSupportFragment implements CardClickList
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
+
+//		NewPipe.init(getDownloader());
 
 		// Set title
 		setTitle("Live TV");
@@ -59,4 +68,20 @@ public class MainFragment extends BrowseSupportFragment implements CardClickList
 		rowsAdapter.add(new ListRow(header, adapter));
 		setAdapter(rowsAdapter);
 	}
+
+
+	// Downloader
+//	protected Downloader getDownloader() {
+//		final DownloaderImpl downloader = DownloaderImpl.init(null);
+//		setCookiesToDownloader(downloader);
+//		return downloader;
+//	}
+//
+//	protected void setCookiesToDownloader(final DownloaderImpl downloader) {
+//		final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(requireContext());
+//
+//		downloader.setCookie("recaptcha_cookies", prefs.getString("recaptcha_cookies", null));
+//		downloader.updateYoutubeRestrictedModeCookies(false);
+//	}
+
 }

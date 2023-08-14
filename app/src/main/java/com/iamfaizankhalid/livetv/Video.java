@@ -3,6 +3,8 @@ package com.iamfaizankhalid.livetv;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.concurrent.ExecutionException;
+
 public class Video implements Parcelable {
 	public static final Parcelable.Creator<Video> CREATOR = new Creator<Video>() {
 		@Override
@@ -39,7 +41,15 @@ public class Video implements Parcelable {
 	}
 
 	public String getUrl() {
-		return "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4";
+		String link = "https://www.youtube.com/watch?v=jNQXAC9IVRw";
+
+		try {
+			return new ExtractStreamTask().execute(link).get();
+		} catch (ExecutionException | InterruptedException e) {
+			e.printStackTrace();
+		}
+
+		return "";
 	}
 
 	@Override
